@@ -1,0 +1,182 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_optionId",
+						"type": "uint256"
+					}
+				],
+				"name": "canMint",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_optionId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_toAddress",
+						"type": "address"
+					}
+				],
+				"name": "mint",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "numOptions",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "supportsFactoryInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_optionId",
+						"type": "uint256"
+					}
+				],
+				"name": "tokenURI",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"canMint(uint256)": {
+					"details": "Returns whether the option ID can be minted. Can return false if the developer wishes to restrict a total supply per option ID (or overall)."
+				},
+				"mint(uint256,address)": {
+					"details": "Mints asset(s) in accordance to a specific address with a particular \"option\". This should be callable only by the contract owner or the owner's Wyvern Proxy (later universal login will solve this). Options should also be delineated 0 - (numOptions() - 1) for convenient indexing.",
+					"params": {
+						"_optionId": "the option id",
+						"_toAddress": "address of the future owner of the asset(s)"
+					}
+				},
+				"tokenURI(uint256)": {
+					"details": "Returns a URL specifying some metadata about the option. This metadata can be of the same structure as the ERC721 metadata."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"name()": {
+					"notice": "Returns the name of this factory."
+				},
+				"numOptions()": {
+					"notice": "Number of options the factory supports."
+				},
+				"supportsFactoryInterface()": {
+					"notice": "Indicates that this is a factory contract. Ideally would use EIP 165 supportsInterface()"
+				},
+				"symbol()": {
+					"notice": "Returns the symbol for this factory."
+				}
+			},
+			"notice": "This is a generic factory contract that can be used to mint tokens. The configuration for minting is specified by an _optionId, which can be used to delineate various ways of minting.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/IFactoryERC721.sol": "FactoryERC721"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/IFactoryERC721.sol": {
+			"keccak256": "0x9012def5117974d07b70f845a71a2f3886e0c65a827768a231ee3662121333f7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://34affb89c3b4a391a5f55f7f28e6dbbf07967aa6bcc42fe3b56ad3c1582b3d2b",
+				"dweb:/ipfs/QmQAmmwUqMPtx56sDuuu3Jc1QxCLszdPAgi8yiQJQ5VMne"
+			]
+		}
+	},
+	"version": 1
+}

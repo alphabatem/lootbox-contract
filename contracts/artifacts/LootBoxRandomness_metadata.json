@@ -1,0 +1,133 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "optionId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "boxesPurchased",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "itemsMinted",
+						"type": "uint256"
+					}
+				],
+				"name": "LootBoxOpened",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "message",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "Warning",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"initState(LootBoxRandomness.LootBoxRandomnessState storage,address,uint256,uint256,uint256)": {
+					"details": "Set up the fields of the state that should have initial values."
+				},
+				"resetClass(LootBoxRandomness.LootBoxRandomnessState storage,uint256)": {
+					"details": "Remove all token ids for a given class, causing it to fall back to creating/minting into the nft address"
+				},
+				"setClassForTokenId(LootBoxRandomness.LootBoxRandomnessState storage,uint256,uint256)": {
+					"details": "If the tokens for some class are pre-minted and owned by the contract owner, they can be used for a given class by setting them here"
+				},
+				"setOptionSettings(LootBoxRandomness.LootBoxRandomnessState storage,uint256,uint256,uint16[],uint16[])": {
+					"details": "Set the settings for a particular lootbox option",
+					"params": {
+						"_classProbabilities": "Array of probabilities (basis points, so integers out of 10,000)                            of receiving each class (the index in the array).                            Should add up to 10k and be descending in value.",
+						"_guarantees": "Array of the number of guaranteed items received for each class                            (the index in the array).",
+						"_maxQuantityPerOpen": "Maximum number of items to mint per open.                            Set to 0 to disable this option.",
+						"_option": "The Option to set settings for"
+					}
+				},
+				"setSeed(LootBoxRandomness.LootBoxRandomnessState storage,uint256)": {
+					"details": "Improve pseudorandom number generator by letting the owner set the seed manually, making attacks more difficult",
+					"params": {
+						"_newSeed": "The new seed to use for the next transaction"
+					}
+				},
+				"setTokenIdsForClass(LootBoxRandomness.LootBoxRandomnessState storage,uint256,uint256[])": {
+					"details": "Alternate way to add token ids to a class Note: resets the full list for the class instead of adding each token id"
+				}
+			},
+			"title": "LootBoxRandomness LootBoxRandomness- support for a randomized and openable lootbox.",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/LootBoxRandomness.sol": "LootBoxRandomness"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/LootBoxRandomness.sol": {
+			"keccak256": "0x1da0362fa5ed310f6dd94cbc1b06ad0b1a3fb848868625a515d6ff6c0866d72e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://45b007338ae0f8f661109e0d187fae58ed94284d638922bf1052fcd83df6ddc8",
+				"dweb:/ipfs/QmPiyB5DZ1cPK8KaZnR79PmPzSoeyA1j47zq1PHei4vf8E"
+			]
+		},
+		"openzeppelin-solidity/contracts/utils/math/SafeMath.sol": {
+			"keccak256": "0x8666f020bd8fc9dc14f07e2ebc52b5f236ab4cdde7c77679b08cb2f94730043b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://163776cbf565c722232393aa2d62cbe8a2ffb5805986abf4906c00e1e07450a6",
+				"dweb:/ipfs/QmPZoN9T3cb6o8bGhjBPZcz7im8T8DWhpr3tjLwhJJHx9N"
+			]
+		}
+	},
+	"version": 1
+}

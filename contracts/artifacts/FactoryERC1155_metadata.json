@@ -1,0 +1,239 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_optionId",
+						"type": "uint256"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_optionId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "canMint",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "factorySchemaName",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_optionId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_toAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "mint",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "numOptions",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "supportsFactoryInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_optionId",
+						"type": "uint256"
+					}
+				],
+				"name": "uri",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"canMint(uint256,uint256)": {
+					"details": "Returns whether the option ID can be minted. Can return false if the developer wishes to restrict a total supply per option ID (or overall)."
+				},
+				"mint(uint256,address,uint256,bytes)": {
+					"details": "Mints asset(s) in accordance to a specific address with a particular \"option\". This should be callable only by the contract owner or the owner's Wyvern Proxy (later universal login will solve this). Options should also be delineated 0 - (numOptions() - 1) for convenient indexing.",
+					"params": {
+						"_amount": "amount of the option to mint",
+						"_data": "Extra data to pass during safeTransferFrom",
+						"_optionId": "the option id",
+						"_toAddress": "address of the future owner of the asset(s)"
+					}
+				},
+				"uri(uint256)": {
+					"details": "Returns a URL specifying some metadata about the option. This metadata can be of the same structure as the ERC1155 metadata."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"factorySchemaName()": {
+					"notice": "Indicates the Wyvern schema name for assets in this lootbox, e.g. \"ERC1155\""
+				},
+				"name()": {
+					"notice": "Returns the name of this factory."
+				},
+				"numOptions()": {
+					"notice": "Number of options the factory supports."
+				},
+				"supportsFactoryInterface()": {
+					"notice": "Indicates that this is a factory contract. Ideally would use EIP 165 supportsInterface()"
+				},
+				"symbol()": {
+					"notice": "Returns the symbol for this factory."
+				}
+			},
+			"notice": "This is a generic factory contract that can be used to mint tokens. The configuration for minting is specified by an _optionId, which can be used to delineate various ways of minting.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/IFactoryERC1155.sol": "FactoryERC1155"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/IFactoryERC1155.sol": {
+			"keccak256": "0xf579b22d8b116827c6e57e4d382d627c06b8cd6ab34deb67af5df15da2a5c3bf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://84a533314a542c5d32d67d7e644053c26681add66830025920bac5106c3e417f",
+				"dweb:/ipfs/QmZt92SKJ782Fye6mvyEwrZpzmgAMpzW3yPP1NbEdoVdXv"
+			]
+		}
+	},
+	"version": 1
+}

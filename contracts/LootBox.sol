@@ -13,7 +13,7 @@ import "./LootBoxRandomness.sol";
  * CreatureAccessoryLootBox - a randomized and openable lootbox of Creature
  * Accessories.
  */
-contract CreatureAccessoryLootBox is ERC1155Tradable, ReentrancyGuard {
+contract LootBox is ERC1155Tradable, ReentrancyGuard {
   using LootBoxRandomness for LootBoxRandomness.LootBoxRandomnessState;
   using SafeMath for uint256;
 
@@ -27,8 +27,8 @@ contract CreatureAccessoryLootBox is ERC1155Tradable, ReentrancyGuard {
    */
   constructor(address _proxyRegistryAddress)
   ERC1155Tradable(
-    "OpenSea Creature Accessory Loot Box",
-    "OSCALOOT",
+    "Babilu Item Loot Box",
+    "BILOOT",
     "",
     _proxyRegistryAddress
   ) {}

@@ -13,7 +13,7 @@ import "./ERC1155Tradable.sol";
  * CreatureAccessory - a factory contract for Creature Accessory semi-fungible
  * tokens.
  */
-contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
+contract ItemFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     using Strings for string;
     using SafeMath for uint256;
 
@@ -21,7 +21,7 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     address public nftAddress;
     address public lootBoxAddress;
     string
-        internal constant baseMetadataURI = "https://creatures-api.opensea.io/api/";
+        internal constant baseMetadataURI = "https://app.babilu.online/";
     uint256 constant UINT256_MAX = ~uint256(0);
 
     /*
@@ -59,11 +59,11 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     /////
 
     function name() override external pure returns (string memory) {
-        return "OpenSea Creature Accessory Pre-Sale";
+        return "Babilu Item Pre-Sale";
     }
 
     function symbol() override external pure returns (string memory) {
-        return "OSCAP";
+        return "BIIP";
     }
 
     function supportsFactoryInterface() override external pure returns (bool) {
@@ -118,7 +118,7 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     ) internal {
         require(
             _canMint(_msgSender(), _option, _amount),
-            "CreatureAccessoryFactory#_mint: CANNOT_MINT_MORE"
+            "ItemFactory#_mint: CANNOT_MINT_MORE"
         );
         if (_option < NUM_ITEM_OPTIONS) {
             require(
