@@ -49,35 +49,10 @@
 		},
 		"gasEstimates": null,
 		"methodIdentifiers": {
-			"balanceOf(address,uint256)": "00fdd58e",
 			"mint(uint256,address,uint256,bytes)": "c77b66c2"
 		}
 	},
 	"abi": [
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "_owner",
-					"type": "address"
-				},
-				{
-					"internalType": "uint256",
-					"name": "_optionId",
-					"type": "uint256"
-				}
-			],
-			"name": "balanceOf",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
 		{
 			"inputs": [
 				{

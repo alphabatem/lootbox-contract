@@ -1,4 +1,3 @@
-  
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
@@ -10,41 +9,49 @@ import "./IFactoryERC1155.sol";
 import "./ERC1155Tradable.sol";
 
 /**
- * @title Item factory
+ * @title CreatureAccessoryFactory
  * CreatureAccessory - a factory contract for Creature Accessory semi-fungible
  * tokens.
  */
-contract ItemFactory is FactoryERC1155, Ownable, ReentrancyGuard {
+contract LootBoxMachine is FactoryERC1155, ReentrancyGuard, Ownable {
     using Strings for string;
     using SafeMath for uint256;
 
+    event LootboxAdded(uint256 indexed optionId);
+
     address public proxyRegistryAddress;
-    address public nftAddress;
+    address public lootBoxAddress;
     string
-        internal constant baseMetadataURI = "https://app.babilu.online/";
+    internal constant baseMetadataURI = "https://app.babilu.online/";
     uint256 constant UINT256_MAX = ~uint256(0);
 
-    // Number of items for this collection
-    uint256 NUM_ITEM_OPTIONS = 0;
+    /*
+     * Optionally set this to a small integer to enforce limited existence per option/token ID
+     * (Otherwise rely on sell orders on OpenSea, which can only be made by the factory owner.)
+     */
+    uint256 constant SUPPLY_PER_TOKEN_ID = 100000; //Max 100k items per token
+
+
+    uint256 public NUM_OPTIONS = 0;
 
     constructor(
         address _proxyRegistryAddress,
-        address _nftAddress,
-        uint256 _initialItemOptionCount
+        address _lootBoxAddress
     ) {
         proxyRegistryAddress = _proxyRegistryAddress;
-        nftAddress = _nftAddress;
-        NUM_ITEM_OPTIONS = _initialItemOptionCount;
+        lootBoxAddress = _lootBoxAddress;
     }
 
-    // Add a new Item
+    // Add a new lootbox saga option
     function addOption() public {
         require(
             _isOwnerOrProxy(_msgSender()),
-            "ItemFactory#addOption: ONLY OWNER CAN ADD OPTION"
+            "LootBoxMachine#addOption: ONLY OWNER CAN ADD OPTION"
         );
 
-        NUM_ITEM_OPTIONS = NUM_ITEM_OPTIONS + 1;
+        NUM_OPTIONS = NUM_OPTIONS + 1;
+
+        emit LootboxAdded(NUM_OPTIONS);
     }
 
     /////
@@ -52,11 +59,22 @@ contract ItemFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     /////
 
     function name() override external pure returns (string memory) {
-        return "Babilu Online Item Factory";
+        return "Babilu LootBox Machine";
     }
 
     function symbol() override external pure returns (string memory) {
-        return "BOFACTORY";
+        return "LOOTMACHINE";
+    }
+
+    function uri(uint256 _optionId) override external pure returns (string memory) {
+        return
+        string(
+            abi.encodePacked(
+                baseMetadataURI,
+                "saga-items/",
+                Strings.toString(_optionId)
+            )
+        );
     }
 
     function supportsFactoryInterface() override external pure returns (bool) {
@@ -68,25 +86,14 @@ contract ItemFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     }
 
     function numOptions() override external view returns (uint256) {
-        return NUM_ITEM_OPTIONS;
-    }
-
-    function uri(uint256 _optionId) override external pure returns (string memory) {
-        return
-            string(
-                abi.encodePacked(
-                    baseMetadataURI,
-                    "saga-items/",
-                    Strings.toString(_optionId)
-                    )
-                );
+        return NUM_OPTIONS;
     }
 
     function canMint(uint256 _optionId, uint256 _amount)
-        override
-        external
-        view
-        returns (bool)
+    override
+    external
+    view
+    returns (bool)
     {
         return _canMint(_msgSender(), _optionId, _amount);
     }
@@ -111,21 +118,21 @@ contract ItemFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     ) internal {
         require(
             _canMint(_msgSender(), _option, _amount),
-            "ItemFactory#_mint: CANNOT_MINT_MORE"
+            "LootBoxMachine#_mint: CANNOT_MINT_MORE"
         );
-        if (_option < NUM_ITEM_OPTIONS) {
-            require(_isOwnerOrProxy(_msgSender()), "Caller cannot mint items");
+        if (_option < NUM_OPTIONS) {
+            require(_isOwnerOrProxy(_msgSender()), "Caller cannot mint boxes");
             // LootBoxes are not premined, so we need to create or mint them.
             // lootBoxOption is used as a token ID here.
             _createOrMint(
-                nftAddress,
+                lootBoxAddress,
                 _toAddress,
                 _option,
                 _amount,
                 _data
             );
         } else {
-            revert("ItemFactory#_mint: Unknown _option");
+            revert("LootBoxMachine#_mint: Unknown _option");
         }
     }
 
@@ -156,17 +163,20 @@ contract ItemFactory is FactoryERC1155, Ownable, ReentrancyGuard {
      * NOTE: Called by `canMint`
      */
     function balanceOf(address _owner, uint256 _optionId)
-        override
-        public
-        view
-        returns (uint256)
+    override
+    public
+    view
+    returns (uint256)
     {
+        if (!_isOwnerOrProxy(_owner)) {
             // Only the factory owner or owner's proxy can have supply
-            if (!_isOwnerOrProxy(_owner)) {
-                return 0;
-            }
-            
-            return UINT256_MAX; //Item balance is limited by the amount of items generated from the LootBoxes
+            return 0;
+        }
+        // We explicitly calculate the token ID here
+        ERC1155Tradable lootBox = ERC1155Tradable(lootBoxAddress);
+        uint256 currentSupply = lootBox.totalSupply(_optionId);
+        // We can mint up to a balance of SUPPLY_PER_TOKEN_ID
+        return SUPPLY_PER_TOKEN_ID.sub(currentSupply);
     }
 
     function _canMint(
@@ -174,16 +184,13 @@ contract ItemFactory is FactoryERC1155, Ownable, ReentrancyGuard {
         uint256 _optionId,
         uint256 _amount
     ) internal view returns (bool) {
-        if(!_isOwnerOrProxy(_fromAddress)) //Only the owner proxy can mint from the factory
-            return false;
-        
-        return _amount > 0 && _optionId < NUM_ITEM_OPTIONS; //Item max qty unknown until 
+        return _amount > 0 && balanceOf(_fromAddress, _optionId) >= _amount;
     }
 
     function _isOwnerOrProxy(address _address) internal view returns (bool) {
         ProxyRegistry proxyRegistry = ProxyRegistry(proxyRegistryAddress);
         return
-            owner() == _address ||
-            address(proxyRegistry.proxies(owner())) == _address;
+        owner() == _address ||
+        address(proxyRegistry.proxies(owner())) == _address;
     }
 }
