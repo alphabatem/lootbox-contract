@@ -70,11 +70,11 @@
 			]
 		},
 		"contracts/Loot.sol": {
-			"keccak256": "0x4ad49f6f6fcdee0edb29ff1eff3435909321fea31482f5499172477e4b0ed968",
+			"keccak256": "0x99dc371dc0da9aa9706e3c8071506c5cef1bee8320d53943382be22ff67175ce",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://cd5363545ddfc68e307a7627b58fd56771ac45b398a845089a2840f5916b5900",
-				"dweb:/ipfs/QmNU6KiVN8uCFVJ7PHdL5bpZseZKBAC2JDM5dJWxbuCx3n"
+				"bzz-raw://a00b6b5390063b6366d331393bff3b44d27e635a8dbdb8c6282ec84993c45b58",
+				"dweb:/ipfs/QmcunPpADQicuQErnRrNEbmQUt8qja61Xg9s75AwRkutCQ"
 			]
 		},
 		"contracts/common/meta-transactions/ContentMixin.sol": {

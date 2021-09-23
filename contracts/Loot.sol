@@ -31,7 +31,7 @@ contract LootBox is ERC1155Tradable {
 
     mapping(uint256 => uint256) public maxSupply;
 
-    event LootBoxOpened(uint256 indexed optionId, address indexed buyer, uint256 boxesPurchased, uint256 itemsMinted);
+    event LootBoxOpened(uint256 indexed optionId, address indexed buyer, uint256 boxesPurchased, uint256[] itemsMinted);
     event ClassItemChosen(uint256 indexed classId, uint256 itemId);
 
     struct OptionSettings {
@@ -220,6 +220,9 @@ contract LootBox is ERC1155Tradable {
         require(settings.exists, "Loot#_mint: Option settings do not exist");
 
         uint256 totalMinted = 0;
+        uint256 itemsGenerated = 0;
+        uint256[] memory itemsMinted = new uint256[](_amount*settings.maxQuantityPerOpen);
+        
         // Iterate over the quantity of boxes specified
         for (uint256 i = 0; i < _amount; i++) {
             // Iterate over the box's set quantity
@@ -229,7 +232,10 @@ contract LootBox is ERC1155Tradable {
                 for (uint256 classId = 0; classId < settings.guarantees.length; classId++) {
                     uint256 quantityOfGuaranteed = settings.guarantees[classId];
                     if (quantityOfGuaranteed > 0) {
-                        _sendTokenWithClass(settings, classId, _toAddress, quantityOfGuaranteed);
+                        uint256 item = _sendTokenWithClass(settings, classId, _toAddress, 1);
+                        itemsMinted[itemsGenerated] = item;
+                        itemsGenerated++;
+                        
                         quantitySent += quantityOfGuaranteed;
                     }
                 }
@@ -239,7 +245,10 @@ contract LootBox is ERC1155Tradable {
             while (quantitySent < settings.maxQuantityPerOpen) {
                 uint256 quantityOfRandomized = 1;
                 uint256 class = _pickRandomClass(settings.classProbabilities);
-                _sendTokenWithClass(settings, class, _toAddress, quantityOfRandomized);
+                uint256 item = _sendTokenWithClass(settings, class, _toAddress, 1);
+                itemsMinted[itemsGenerated] = item;
+                itemsGenerated++;
+                
                 quantitySent += quantityOfRandomized;
             }
 
@@ -247,7 +256,7 @@ contract LootBox is ERC1155Tradable {
         }
 
         // Event emissions
-        emit LootBoxOpened(_optionId, _toAddress, _amount, totalMinted);
+        emit LootBoxOpened(_optionId, _toAddress, _amount, itemsMinted);
     }
 
     /////
