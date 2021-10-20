@@ -14,6 +14,13 @@ abstract contract Factory {
     function mint(uint256 _optionId, address _toAddress, uint256 _amount, bytes calldata _data) virtual external;
 }
 
+
+/**
+ * @title LootBox
+ * LootBox - a contract for LootBox Generation & Opening.
+ * On Rinkeby: "0xf57b2c51ded3a29e6891aba85459d600256cf317"
+ * On mainnet: "0xa5409ec958c83c3f309868babaca7c86dcb077c1"
+ */
 contract LootBox is ERC1155Tradable {
     using SafeMath for uint256;
     
@@ -21,6 +28,8 @@ contract LootBox is ERC1155Tradable {
 
     //Items address
     address itemFactoryAddress;
+
+    string constant DELIM = ",";
 
     uint256 seed;
 
@@ -219,12 +228,14 @@ contract LootBox is ERC1155Tradable {
         OptionSettings memory settings = _getOptionSettings(_optionId);
         require(settings.exists, "Loot#_mint: Option settings do not exist");
 
-        uint256 totalMinted = 0;
+
         uint256 itemsGenerated = 0;
-        uint256[] memory itemsMinted = new uint256[](_amount*settings.maxQuantityPerOpen);
         
         // Iterate over the quantity of boxes specified
         for (uint256 i = 0; i < _amount; i++) {
+            uint256[] memory itemsMinted = new uint256[](settings.maxQuantityPerOpen);
+            uint256 totalMinted = 0;
+        
             // Iterate over the box's set quantity
             uint256 quantitySent = 0;
             if (settings.hasGuaranteedClasses) {
@@ -253,10 +264,10 @@ contract LootBox is ERC1155Tradable {
             }
 
             totalMinted += quantitySent;
-        }
 
-        // Event emissions
-        emit LootBoxOpened(_optionId, _toAddress, _amount, itemsMinted);
+            // Event emissions
+            emit LootBoxOpened(_optionId, _toAddress, 1, itemsMinted);
+        }
     }
 
     /////
@@ -335,7 +346,7 @@ contract LootBox is ERC1155Tradable {
    * @dev Returns a URL specifying some metadata about the option. This metadata can be of the
    * same structure as the ERC721 metadata.
    */
-  function tokenURI(uint256 _optionId) public view returns (string memory) {
+  function tokenURI(uint256 _optionId) public pure returns (string memory) {
       return "https://app.babilu.online/sagas/{id}";
   }
 }

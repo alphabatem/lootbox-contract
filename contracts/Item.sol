@@ -10,7 +10,7 @@ import "./IFactoryERC1155.sol";
 import "./Loot.sol";
 
 /**
- * @title CreatureAccessory
+ * @title Item
  * CreatureAccessory - a contract for Creature Accessory semi-fungible tokens.
  * On Rinkeby: "0xf57b2c51ded3a29e6891aba85459d600256cf317"
  * On mainnet: "0xa5409ec958c83c3f309868babaca7c86dcb077c1"

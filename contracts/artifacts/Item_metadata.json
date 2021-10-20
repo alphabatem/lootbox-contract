@@ -881,7 +881,7 @@
 					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
 				}
 			},
-			"title": "CreatureAccessory CreatureAccessory - a contract for Creature Accessory semi-fungible tokens. ",
+			"title": "Item CreatureAccessory - a contract for Creature Accessory semi-fungible tokens. On Rinkeby: \"0xf57b2c51ded3a29e6891aba85459d600256cf317\" On mainnet: \"0xa5409ec958c83c3f309868babaca7c86dcb077c1\"",
 			"version": 1
 		},
 		"userdoc": {
@@ -927,19 +927,19 @@
 			]
 		},
 		"contracts/Item.sol": {
-			"keccak256": "0x44f4d02225eb234fcfd5045cccac8bc75f3a6eb0293fe9a1aa3fe0d73480081e",
+			"keccak256": "0x105c002f4c500ceb22f313d2573411bf3e8fbf13fc622edeb7161bd61269667d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0605027ae6c38b1460d9735e323a0bbf759930964f7a4505ae8c22a4ecf61490",
-				"dweb:/ipfs/QmdQHwFBfu6P8gQxn1bgi34oLpXt8gyc1hNFaycidyWacN"
+				"bzz-raw://ca88d6a1194599e41d8a21678ab444a1baa59228799398b693219401476eb756",
+				"dweb:/ipfs/QmUovZ9P1UFajxd7zhFrQHU4kVRkTpA2i8E9uxhWmy8n6Q"
 			]
 		},
 		"contracts/Loot.sol": {
-			"keccak256": "0x99dc371dc0da9aa9706e3c8071506c5cef1bee8320d53943382be22ff67175ce",
+			"keccak256": "0x71e90ea7721ad4afa47febba9ecb78e7807aac89ad3498e63d1793e2aa6159c5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a00b6b5390063b6366d331393bff3b44d27e635a8dbdb8c6282ec84993c45b58",
-				"dweb:/ipfs/QmcunPpADQicuQErnRrNEbmQUt8qja61Xg9s75AwRkutCQ"
+				"bzz-raw://50d0ab4bd7fd45a7e400c20c01b23e76931a832170ca09f90a78fea3251814b9",
+				"dweb:/ipfs/QmNz6eJ4SxQdBqD3s1gHcY5cxT9gHRHN84oLZ9w7h3UxAN"
 			]
 		},
 		"contracts/common/meta-transactions/ContentMixin.sol": {

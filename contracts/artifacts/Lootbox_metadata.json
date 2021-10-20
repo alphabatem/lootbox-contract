@@ -886,7 +886,7 @@
 						"type": "string"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "pure",
 				"type": "function"
 			},
 			{
@@ -1060,6 +1060,7 @@
 					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
 				}
 			},
+			"title": "LootBox LootBox - a contract for LootBox Generation & Opening. On Rinkeby: \"0xf57b2c51ded3a29e6891aba85459d600256cf317\" On mainnet: \"0xa5409ec958c83c3f309868babaca7c86dcb077c1\"",
 			"version": 1
 		},
 		"userdoc": {
@@ -1100,11 +1101,11 @@
 			]
 		},
 		"contracts/Loot.sol": {
-			"keccak256": "0x99dc371dc0da9aa9706e3c8071506c5cef1bee8320d53943382be22ff67175ce",
+			"keccak256": "0x5fd4e361de1d6a6244e030173c64d6bcf6f673bc456559ae05dd07c2644abeac",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a00b6b5390063b6366d331393bff3b44d27e635a8dbdb8c6282ec84993c45b58",
-				"dweb:/ipfs/QmcunPpADQicuQErnRrNEbmQUt8qja61Xg9s75AwRkutCQ"
+				"bzz-raw://212fe1b200629ff0ec40ac836874658129550925bb869713e727b8abab810790",
+				"dweb:/ipfs/QmZmGWTtv6JsCcK3dgx94LzdKVibmoLXxCH9tCcfPkE467"
 			]
 		},
 		"contracts/common/meta-transactions/ContentMixin.sol": {
